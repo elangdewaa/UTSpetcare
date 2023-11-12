@@ -1,46 +1,59 @@
-// // LanguageSelectionScreen.js
-import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+// LanguageSelectionScreen.js
+import React, { useState } from 'react';
+import { SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native';
+import { VStack, Divider, HStack } from '@gluestack-ui/themed';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
-const LanguageSelection = ({ navigation }) => {
-  const languages = ['Bahasa', 'English', 'Spanish', 'French'];
+const languages = [
+  { id: 'en', name: 'English' },
+  { id: 'id', name: 'Bahasa Indonesia' },
+  { id: 'uk', name: 'English UK' },
+];
 
-  const onSelectLanguage = (language) => {
-    // Kembalikan ke layar sebelumnya (SettingScreen) dengan mengirim bahasa yang dipilih
-    navigation.navigate('Setting', { selectedLanguage: language });
+const LanguageSelectionScreen = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const navigation = useNavigation();
+
+  const handleLanguageSelect = (language) => {
+    setSelectedLanguage(language);
+    // Memanggil fungsi onSelectLanguage langsung di sini
+    onSelectLanguage(language.id);
+    navigation.goBack();
+  };
+
+  // Modifikasi fungsi onSelectLanguage agar bisa diserialisasi
+  const onSelectLanguage = (languageId) => {
+    console.log(`Bahasa terpilih: ${languageId}`);
+    // Lakukan apa pun yang perlu dilakukan dengan bahasa yang terpilih
   };
 
   return (
-    <View>
-      <Text>Pilih Bahasa:</Text>
-      {languages.map((language) => (
-        <TouchableOpacity key={language} onPress={() => onSelectLanguage(language)}>
-          <Text>{language}</Text>
-        </TouchableOpacity>
-      ))}
-    </View>
+    <SafeAreaView>
+      <VStack space="md" p={20} backgroundColor="lightyellow">
+        <FlatList
+          data={languages}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => handleLanguageSelect(item)}>
+              <HStack alignItems="center">
+                <Ionicons size={20} name="language" />
+                <Text fontSize="lg" style={{ marginLeft: 12 }}>
+                  {item.name}
+                </Text>
+                {selectedLanguage === item.id && (
+                  <View>
+                    <Text> yang Dipilih</Text>
+                  </View>
+                )}
+              </HStack>
+            </TouchableOpacity>
+          )}
+          ItemSeparatorComponent={() => <Divider my={0.2} />}
+        />
+      </VStack>
+    </SafeAreaView>
   );
 };
 
-export default LanguageSelection;
-
-// LanguageSelection.js
-// import React, { useState } from 'react';
-// import { View, Text, TouchableOpacity } from 'react-native';
-
-// const LanguageSelection = ({ selectedLanguage, onSelectLanguage }) => {
-//   const languages = ['Bahasa', 'English', 'Spanish', 'French']; // Ganti dengan daftar bahasa yang diinginkan
-
-//   return (
-//     <View>
-//       <Text>Pilih Bahasa:</Text>
-//       {languages.map((language) => (
-//         <TouchableOpacity key={language} onPress={() => onSelectLanguage(language)}>
-//           <Text>{language}</Text>
-//         </TouchableOpacity>
-//       ))}
-//     </View>
-//   );
-// };
-
-// export default LanguageSelection;
+export default LanguageSelectionScreen;

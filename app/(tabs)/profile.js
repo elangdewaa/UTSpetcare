@@ -4,7 +4,6 @@ import { Header } from "../../components";
 import { SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-
 const Profile = () => {
 
   return (
@@ -39,7 +38,7 @@ const Profile = () => {
           </Heading>
         </Box>
         <VStack space="md" p={20} backgroundColor="lightyellow">
-          <Text>Ubah Password</Text>
+          <Text> Ubah Password</Text>
           <Divider my={0.2} />
           <Link
             href={{
@@ -47,10 +46,19 @@ const Profile = () => {
             }}
           >
             <TouchableOpacity backgroundColor="$blue600" borderRadius={"$full"}>
-              <ButtonText color="#0C0C0C">Setting</ButtonText>
+              <ButtonText color="#0C0C0C"> Setting</ButtonText>
             </TouchableOpacity>
           </Link>
-
+          <Divider my={0.2} />
+          <Link
+            href={{
+              pathname: "/accordion"
+            }}
+          >
+            <TouchableOpacity backgroundColor="$blue600" borderRadius={"$full"}>
+              <ButtonText color="#0C0C0C"> FAQ</ButtonText>
+            </TouchableOpacity>
+          </Link>
         </VStack>
       </SafeAreaView >
 
