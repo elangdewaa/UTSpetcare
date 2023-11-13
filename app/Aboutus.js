@@ -1,77 +1,148 @@
-import { Heading, Text, Center, Image, Box, VStack, Link, ScrollView } from "@gluestack-ui/themed";
+import {
+  Heading,
+  Text,
+  Center,
+  Image,
+  Box,
+  VStack,
+  Link,
+  ScrollView,
+  FlatList,
+  HStack,
+  Button,
+} from "@gluestack-ui/themed";
 import { Header } from "../components";
 import { useFonts } from "expo-font";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Aboutus = () => {
+  const data = [
+    {
+      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+      fullName: "Aafreen Khan",
+      timeStamp: "12:47 PM",
+      recentText: "Good Day!",
+      avatarUrl:
+        "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      
+    },
+    {
+      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+      fullName: "Sujitha Mathur",
+      timeStamp: "11:11 PM",
+      recentText: "Cheer up, there!",
+      avatarUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyEaZqT3fHeNrPGcnjLLX1v_W4mvBlgpwxnA&usqp=CAU",
+      
+    },
+    {
+      id: "58694a0f-3da1-471f-bd96-145571e29d72",
+      fullName: "Anci Barroco",
+      timeStamp: "6:22 PM",
+      recentText: "Good Day!",
+      avatarUrl: "https://miro.medium.com/max/1400/0*0fClPmIScV5pTLoE.jpg",
+      
+    },
+    {
+      id: "68694a0f-3da1-431f-bd56-142371e29d72",
+      fullName: "Aniket Kumar",
+      timeStamp: "8:56 PM",
+      recentText: "All the best",
+      avatarUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSr01zI37DYuR8bMV5exWQBSw28C1v_71CAh8d7GP1mplcmTgQA6Q66Oo--QedAN1B4E1k&usqp=CAU",
+
+    },
+    {
+      id: "28694a0f-3da1-471f-bd96-142456e29d72",
+      fullName: "Kiara",
+      timeStamp: "12:47 PM",
+      recentText: "I will call today.",
+      avatarUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBwgu1A5zgPSvfE83nurkuzNEoXs9DMNr8Ww&usqp=CAU",
+    },
+  ];
+
   return (
     <>
-    <ScrollView>
-      <Header title={"About us"} />
-      <Center>
-        <Heading
-          ml={"$1"}
-          lineHeight={"$5xl"}
-          mb={"$7"}
-          color="$black"
-          textAlign="Center"
-        >
-          Our Services
-        </Heading>
-        <Image
-          size="xl"
-          borderRadius="$full"
-          source={{
-            uri: "https://www.aspca.org/sites/default/files/general-pet-care_facebook.jpg",
-          }}
-        />
-        <Text textAlign="Center" ml="$5" mt="$10">
-          Menyediakan Layanan Terbaik Untuk Hewan Kesayangan Kamu
-        </Text>
-        <Box
-          maxWidth="$64"
-          borderColor="$borderLight200"
-          borderRadius="$lg"
-          borderWidth="$1"
-          my="$4"
-          overflow="hidden"
-          sx={{
-            "@base": {
-              mx: "$5",
-            },
-            _dark: {
-              bg: "$backgroundDark900",
-              borderColor: "$borderDark800",
-            },
-          }}
-        >
-          <Box>
-            <Image
-            borderRadius="$3xl"
-              h={150}
-              width="100%"
-              source={{
-                uri: "data:image/jpeg;base64,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",
-              }}
-            />
-          </Box>
-          <VStack px="$6" pt="$4" pb="$6">
-            
-            <Heading _dark={{ color: "$textLight200" }} size="sm">
-              Grooming 
-            </Heading>
-            <Text my="$1.5" _dark={{ color: "$textLight200" }} fontSize="$xs">
-            Grooming hewan secara teratur memungkinkan pemiliknya untuk mencegah penyakit atau kondisi yang dapat berkembang menjadi penyakit lebih awal. Dengan begitu, penyakit yang dapat menyerang bisa diobati lebih cepat dan lebih efisien, sehingga tidak memiliki efek jangka panjang pada hewan peliharaan. Perawatan ini dapat dilakukan sendiri atau melalui profesional.
-            </Text>
-            <Link href="https://www.halodoc.com/artikel/penjelasan-tentang-grooming-untuk-hewan-peliharaan" isExternal>
-              <Text fontSize="$sm F" color="$pink600">
-                Find out more
+      <SafeAreaView flex={1}>
+        <Box>
+          <ScrollView>
+            <Header title={"About us"} />
+            <Center>
+              <Heading
+                ml={"$1"}
+                lineHeight={"$5xl"}
+                mb={"$7"}
+                color="$black"
+                textAlign="Center"
+              >
+                Our Services
+              </Heading>
+              <Image
+                size="xl"
+                borderRadius="$full"
+                source={{
+                  uri: "https://www.aspca.org/sites/default/files/general-pet-care_facebook.jpg",
+                }}
+              />
+              <Text textAlign="Center" ml="$5" mt="$10">
+                Menyediakan Layanan Terbaik Untuk Hewan Kesayangan Kamu
               </Text>
-            </Link>
-          </VStack>
-          
-        </Box>
+              <Box
+                maxWidth="$64"
+                borderColor="$borderLight200"
+                borderRadius="$lg"
+                borderWidth="$1"
+                my="$4"
+                overflow="hidden"
+                sx={{
+                  "@base": {
+                    mx: "$5",
+                  },
+                  _dark: {
+                    bg: "$backgroundDark900",
+                    borderColor: "$borderDark800",
+                  },
+                }}
+              >
+                <Box>
+                  <Image
+                    borderRadius="$3xl"
+                    h={150}
+                    width="100%"
+                    source={{
+                      uri: "data:image/jpeg;base64,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",
+                    }}
+                  />
+                </Box>
+                <VStack px="$6" pt="$4" pb="$6">
+                  <Heading _dark={{ color: "$textLight200" }} size="sm">
+                    Grooming
+                  </Heading>
+                  <Text
+                    my="$1.5"
+                    _dark={{ color: "$textLight200" }}
+                    fontSize="$xs"
+                  >
+                    Grooming hewan secara teratur memungkinkan pemiliknya untuk
+                    mencegah penyakit atau kondisi yang dapat berkembang menjadi
+                    penyakit lebih awal. Dengan begitu, penyakit yang dapat
+                    menyerang bisa diobati lebih cepat dan lebih efisien,
+                    sehingga tidak memiliki efek jangka panjang pada hewan
+                    peliharaan. Perawatan ini dapat dilakukan sendiri atau
+                    melalui profesional.
+                  </Text>
+                  <Link
+                    href="https://www.halodoc.com/artikel/penjelasan-tentang-grooming-untuk-hewan-peliharaan"
+                    isExternal
+                  >
+                    <Text fontSize="$sm F" color="$pink600">
+                      Find out more
+                    </Text>
+                  </Link>
+                </VStack>
 
-        <Box
+                <Box
           maxWidth="$64"
           borderColor="$borderLight200"
           borderRadius="$lg"
@@ -101,7 +172,7 @@ const Aboutus = () => {
           <VStack px="$6" pt="$4" pb="$6">
             
             <Heading _dark={{ color: "$textLight200" }} size="sm">
-              Grooming 
+              Hotel
             </Heading>
             <Text my="$1.5" _dark={{ color: "$textLight200" }} fontSize="$xs">
             Beberapa orang tidak bisa mengajak hewan peliharaan tersayang saat sedang bepergian, entah karena jarak yang ditempuh cukup jauh atau pilihan transportasi yang kurang memadai. Walhasil, pet hotel atau tempat penitipan hewan menjadi alternatif untuk menitipkan hewan peliharaan selama ditinggal bepergian, terlebih saat tidak ada kerabat atau keluarga yang bisa menjaga sahabat bulu.
@@ -114,8 +185,87 @@ const Aboutus = () => {
           </VStack>
           
         </Box>
-      </Center>
-      </ScrollView>
+              </Box>
+            <Heading
+                ml={"$1"}
+                lineHeight={"$5xl"}
+                mb={"$7"}
+                color="$black"
+                textAlign="Center"
+                justifyContent="Center"
+                >
+               Our Employees
+              </Heading>
+                </Center>
+            <FlatList
+              data={data}
+              renderItem={({ item }) => (
+                <Box
+                  borderBottomWidth="$1"
+                  borderColor="$trueGray800"
+                  sx={{
+                    _dark: {
+                      borderColor: "$trueGray100",
+                    },
+                    "@base": {
+                      pl: 0,
+                      pr: 0,
+                    },
+                    "@sm": {
+                      pl: "$4",
+                      pr: "$5",
+                    },
+                  }}
+                  py="$2"
+                >
+                  <HStack space="md" justifyContent="space-between">
+                    <Image source={{ uri: item.avatarUrl }} size={16} mr={4} />
+
+                    <VStack>
+                      <Text
+                        color="$coolGray800"
+                        fontWeight="$bold"
+                        sx={{
+                          _dark: {
+                            color: "$warmGray100",
+                          },
+                        }}
+                      >
+                        {item.fullName}
+                      </Text>
+                      <Text
+                        color="$coolGray600"
+                        sx={{
+                          _dark: {
+                            color: "$warmGray200",
+                          },
+                        }}
+                      >
+                        {item.recentText}
+                      </Text>
+                    </VStack>
+                    <VStack>
+                      <Text
+                        fontSize="$xs"
+                        color="$coolGray800"
+                        alignSelf="flex-start"
+                        sx={{
+                          _dark: {
+                            color: "$warmGray100",
+                          },
+                        }}
+                      >
+                        {item.timeStamp}
+                      </Text>
+                    </VStack>
+                  </HStack>
+                </Box>
+              )}
+              keyExtractor={(item) => item.id}
+            />
+          </ScrollView>
+          </Box>
+      </SafeAreaView>
     </>
   );
 };
